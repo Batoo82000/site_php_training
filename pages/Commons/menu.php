@@ -21,9 +21,9 @@
                         Pensionnaires
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="#">Action</a></li>
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="#">Another action</a></li>
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Global/pensionnaire.php">Ils cherchent une famille</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Pensionnaires/longueDuree.php">Famille d'accueil longue durée</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Pensionnaires/anciens.php">Les anciens</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -31,8 +31,8 @@
                         Actus
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item perso_ColorVertMenu" href="#">Action</a></li>
-                        <li><a class="dropdown-item perso_ColorVertMenu" href="#">Another action</a></li>
+                        <li><a class="dropdown-item perso_ColorVertMenu" href="../Global/actus.php">Nouvelles des adoptés</a></li>
+                        <li><a class="dropdown-item perso_ColorVertMenu" href="#">Evènements</a></li>
                         <li><a class="dropdown-item perso_ColorVertMenu" href="#">Something else here</a></li>
                     </ul>
                 </li>
@@ -41,9 +41,12 @@
                         Conseils
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item perso_ColorRougeMenu" href="#">Action</a></li>
-                        <li><a class="dropdown-item perso_ColorRougeMenu" href="#">Another action</a></li>
-                        <li><a class="dropdown-item perso_ColorRougeMenu" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item perso_ColorRougeMenu" href="../Articles/chocolat.php">Le chocolat</a></li>
+                        <li><a class="dropdown-item perso_ColorRougeMenu" href="../Articles/educateur.php">Education canine</a></li>
+                        <li><a class="dropdown-item perso_ColorRougeMenu" href="../Articles/plantes.php">Les plantes toxiques</a></li>
+                        <li><a class="dropdown-item perso_ColorRougeMenu" href="../Articles/sterilisation.php">Stérilisation</a></li>
+                        <li><a class="dropdown-item perso_ColorRougeMenu" href="../Articles/temperature.php">Température</a></li>
+
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -51,9 +54,9 @@
                         Contacts
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item perso_ColorBleuMenu" href="#">Action</a></li>
-                        <li><a class="dropdown-item perso_ColorBleuMenu" href="#">Another action</a></li>
-                        <li><a class="dropdown-item perso_ColorBleuMenu" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item perso_ColorBleuMenu" href="../Contact/contact.php">Contact</a></li>
+                        <li><a class="dropdown-item perso_ColorBleuMenu" href="../Contact/don.php">Don</a></li>
+                        <li><a class="dropdown-item perso_ColorBleuMenu" href="../Contact/mentions.php">Mentions Légales</a></li>
                     </ul>
                 </li>
 

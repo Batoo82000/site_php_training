@@ -23,7 +23,7 @@ include("../../utile/config.php")
         <header class="bg-dark text-white rounded-top perso_titre">
             <div class="row align-items-center m-0">
                 <div class="col-2 p-2 text-center">
-                    <a href="index.php">
+                    <a href="../Global/index.php">
                         <img src="../../sources/images/Autres/logoNANA2.jpg" class="rounded-circle img-fluid perso_logoSize" alt="logo">
                     </a>
                 </div>
@@ -37,4 +37,4 @@ include("../../utile/config.php")
         </header>
         <!-- -- Contenu du site -- -->
 
-        <div class="border p-1 perso_minCorpSize">
+        <div class="border p-1 perso_minCorpSize px-5">
