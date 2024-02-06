@@ -1,6 +1,7 @@
 <?php 
 include("../../utile/formatage.php");
-include("../../utile/config.php")
+include("../../utile/config.php");
+include("../Global/config.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">

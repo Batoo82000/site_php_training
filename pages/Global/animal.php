@@ -1,23 +1,77 @@
-<?php include '../Commons/header.php'; ?>
+<?php include '../Commons/header.php';
+require_once 'pdo.php';
 
-<?= styleTitreNiveau1("Odin", COLOR_TITRE_PENSIONNAIRES) ?>
+$bdd = connexionPDO();
+$req = "
+SELECT * 
+FROM animal 
+where id_animal = :idAnimal";
+$stmt = $bdd->prepare($req);
+$stmt->bindValue(':idAnimal', $_GET['idAnimal']);
+$stmt->execute();
+$animal = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt->closeCursor();
 
-<div class="row border border-dark rounded-3 m-2 align-items-center perso_bgVert">
+$stmt = $bdd->prepare('
+SELECT i.id_image, libelle_image, url_image, description_image
+FROM image i
+INNER JOIN contient c on i.id_image = c.id_image
+INNER JOIN animal a on a.id_animal = c.id_animal
+WHERE a.id_animal= :idAnimal
+LIMIT 1
+');
+$stmt->bindValue(':idAnimal', $animal['id_animal']);
+$stmt->execute();
+$image = $stmt->fetch(PDO::FETCH_ASSOC);
+$stmt->closeCursor();
+
+$stmt = $bdd->prepare('
+SELECT * 
+FROM caractere c
+INNER join dispose d on c.id_caractere = d.id_caractere
+where id_animal = :idAnimal
+');
+$stmt->bindValue(':idAnimal', $animal['id_animal']);
+$stmt->execute();
+$caracteres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt->closeCursor();
+
+?>
+
+<?= styleTitreNiveau1($animal['nom_animal'], COLOR_TITRE_PENSIONNAIRES) ?>
+
+<div class="row border border-dark rounded-3 m-2 align-items-center <?= ($animal['sexe']) ? "perso_bgVert" : "perso_bgRose" ?>">
     <div class="col p-2 center">
-        <img src="../../sources/images/animaux/Chats/Odin/Odin.jpg" class="img-thumbnail" alt="Framboise" style="max-height: 180px">
+        <img src="../../sources/images/animaux/<?= $animal['type_animal'] ?>/<?= $image['url_image'] ?>" class="img-thumbnail" alt="<?= $image['libelle_image'] ?>" style="max-height: 180px">
     </div>
+
+    <?php
+    $iconeChien = "";
+    if ($animal['ami_chien'] === "oui") $iconeChien = "chienOk.png";
+    else if ($animal['ami_chien'] === "non") $iconeChien = "chienBar.png";
+    else if ($animal['ami_chien'] === "N/A") $iconeChien = "chienQuest.png";
+    $iconeChat = "";
+    if ($animal['ami_chat'] === "oui") $iconeChat = "chatOk.png";
+    else if ($animal['ami_chat'] === "non") $iconeChat = "chatBar.png";
+    else if ($animal['ami_chat'] === "N/A") $iconeChat = "chatQuest.png";
+    $iconeBaby = "";
+    if ($animal['ami_enfant'] === "oui") $iconeBaby = "babyOk.png";
+    else if ($animal['ami_enfant'] === "non") $iconeBaby = "babyBar.png";
+    else if ($animal['ami_enfant'] === "N/A") $iconeBaby = "babyQuest.png";
+    ?>
     <div class="col-2 col-md-1 border-start border-end text-center border-dark">
-        <img src="../../sources/images/Autres/icones/chienOk.png" class="img-fluid m-1" alt="Framboise" style="width: 50px">
-        <img src="../../sources/images/Autres/icones/chatOk.png" class="img-fluid m-1" alt="Framboise" style="width: 50px">
-        <img src="../../sources/images/Autres/icones/babyOk.png" class="img-fluid m-1" alt="Framboise" style="width: 50px">
+        <img src="../../sources/images/Autres/icones/<?= $iconeChien ?>" class="img-fluid m-1" alt="<?= $iconeChien ?>" style="width: 50px">
+        <img src="../../sources/images/Autres/icones/<?= $iconeChat ?>" class="img-fluid m-1" alt="<?= $iconeChien ?>" style="width: 50px">
+        <img src="../../sources/images/Autres/icones/<?= $iconeBaby ?>" class="img-fluid m-1" alt="<?= $iconeChien ?>" style="width: 50px">
     </div>
+
     <div class="col-6 col-md-4 text-center">
-        <div class="perso_policeTitre perso_Size20 mb-3">Puce : XXXXXXXXXXXX</div>
-        <div class="mb-2">Née le : 01/01/2000</div>
+        <div class="perso_policeTitre perso_Size20 mb-3">Puce : <?php $animal['puce'] ?></div>
+        <div class="mb-2">Née le : <?= $animal['date_naissance_animal'] ?></div>
         <div class="">
-            <span class="badge bg-warning m-1 p-2 ">douce</span>
-            <span class="badge bg-warning m-1 p-2 ">calme</span>
-            <span class="badge bg-warning m-1 p-2 ">joueuse</span>
+            <?php foreach ($caracteres as $caractere) : ?>
+                <span class="badge bg-warning m-1 p-2 d-none d-sm-inline"><?= $caractere['libelle_caractere'] ?></span>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="col-12 col-md-4">
@@ -63,12 +117,12 @@
                 <img src="../../sources/images/Autres/icones/IconeAdopt.png" alt="" width="50" height="50" class="d-block mx-auto">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque temporibus, autem, incidunt fugiat, voluptates ipsa doloribus voluptatibus natus quia quas vel.
             </p>
-            <hr/>
+            <hr />
             <p>
                 <img src="../../sources/images/Autres/icones/oeil.jpg" alt="" width="50" height="50" class="d-block mx-auto">
                 Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit porro dolor at distinctio. Cum, voluptatibus soluta, nobis debitis quasi voluptatem ut earum inventore laboriosam saepe, odit reprehenderit. Fuga, ipsam cum?
             </p>
-            <hr/>
+            <hr />
             <p>
                 <img src="../../sources/images/Autres/icones/iconeContrat.png" alt="" width="50" height="50" class="d-block mx-auto">
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur debitis facere molestiae cum aut repudiandae odit excepturi, officiis aliquam modi. Ratione molestiae maxime, id aliquam harum pariatur eaque voluptate architecto?

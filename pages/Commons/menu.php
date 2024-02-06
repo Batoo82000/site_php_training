@@ -21,9 +21,9 @@
                         Pensionnaires
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Global/pensionnaire.php">Ils cherchent une famille</a></li>
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Pensionnaires/longueDuree.php">Famille d'accueil longue durée</a></li>
-                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Pensionnaires/anciens.php">Les anciens</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Global/pensionnaire.php?idstatus=<?= ID_STATUT_A_L_ADOPTION ?>">Ils cherchent une famille</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Global/pensionnaire.php?idstatus=<?= ID_STATUT_FALD ?>">Famille d'accueil longue durée</a></li>
+                        <li><a class="dropdown-item perso_ColorOrangeMenu" href="../Global/pensionnaire.php?idstatus=<?= ID_STATUT_ADOPTE ?>">Les anciens</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">

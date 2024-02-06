@@ -4,14 +4,31 @@
 require_once 'pdo.php';
 
 $bdd = connexionPDO();
-$stmt = $bdd->prepare("SELECT * FROM animal");
+$req = "SELECT * FROM animal where id_status = :idStatus";
+if ((int) $_GET['idstatus'] === ID_STATUT_ADOPTE) {
+    $req .= " or id_status = " . ID_STATUT_MORT;
+}
+$stmt = $bdd->prepare($req);
+$stmt->bindValue(':idStatus', $_GET['idstatus']);
 $stmt->execute();
 $animaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt->closeCursor();
 
 ?>
 
-<?= styleTitreNiveau1("Ils cherchent une famille", COLOR_TITRE_PENSIONNAIRES) ?>
+<?php 
+    $titleH1 ="";
+
+    if ((int) $_GET['idstatus'] === ID_STATUT_A_L_ADOPTION) : $titleH1 ="Ils cherchent une famille";
+
+    elseif ((int) $_GET['idstatus'] === ID_STATUT_ADOPTE) : $titleH1 ="Les anciens"; 
+
+    elseif ((int) $_GET['idstatus'] === ID_STATUT_FALD) : $titleH1 ="Famille d’accueil longue durée";
+    
+    endif;
+
+    echo styleTitreNiveau1($titleH1, COLOR_TITRE_PENSIONNAIRES);
+?>
 
 
 <div class="row g-0">
@@ -32,7 +49,7 @@ $stmt->closeCursor();
         ?>
 
         <div class="col-12 col-lg-6">
-            <div class="row border border-dark rounded-3 m-2 align-items-center perso_bgRose" style="height: 200px;">
+            <div class="row border border-dark rounded-3 m-2 align-items-center <?= ($animal['sexe']) ? "perso_bgVert" : "perso_bgRose"?>" style="height: 200px;">
                 <div class="col p-2 center">
                     <img src="../../sources/images/animaux/<?= $animal['type_animal'] ?>/<?= $image['url_image'] ?>" class="img-thumbnail" alt="<?= $image['libelle_image'] ?>" style="max-height: 180px">
                 </div>
