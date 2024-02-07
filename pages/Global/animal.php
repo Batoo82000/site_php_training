@@ -18,11 +18,10 @@ FROM image i
 INNER JOIN contient c on i.id_image = c.id_image
 INNER JOIN animal a on a.id_animal = c.id_animal
 WHERE a.id_animal= :idAnimal
-LIMIT 1
 ');
 $stmt->bindValue(':idAnimal', $animal['id_animal']);
 $stmt->execute();
-$image = $stmt->fetch(PDO::FETCH_ASSOC);
+$images = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $stmt->closeCursor();
 
 $stmt = $bdd->prepare('
@@ -42,7 +41,7 @@ $stmt->closeCursor();
 
 <div class="row border border-dark rounded-3 m-2 align-items-center <?= ($animal['sexe']) ? "perso_bgVert" : "perso_bgRose" ?>">
     <div class="col p-2 center">
-        <img src="../../sources/images/animaux/<?= $animal['type_animal'] ?>/<?= $image['url_image'] ?>" class="img-thumbnail" alt="<?= $image['libelle_image'] ?>" style="max-height: 180px">
+        <img src="../../sources/images/animaux/<?= $animal['type_animal'] ?>/<?= $images[0]['url_image'] ?>" class="img-thumbnail" alt="<?= $images[0]['libelle_image'] ?>" style="max-height: 180px">
     </div>
 
     <?php
@@ -70,35 +69,31 @@ $stmt->closeCursor();
         <div class="mb-2">Née le : <?= $animal['date_naissance_animal'] ?></div>
         <div class="">
             <?php foreach ($caracteres as $caractere) : ?>
-                <span class="badge bg-warning m-1 p-2 d-none d-sm-inline"><?= $caractere['libelle_caractere'] ?></span>
+                <span class="badge bg-warning m-1 p-2 d-none d-sm-inline"><?= ($animal['sexe']) ? $caractere['libelle_caractere_m'] : $caractere['libelle_caractere_f'] ?></span>
             <?php endforeach; ?>
         </div>
     </div>
-    <div class="col-12 col-md-4">
+    <!-- <div class="col-12 col-md-4">
         Lorem ipsum dolor sit amet, consectetur adipisicing elit.<br />
         Architecto ea unde reiciendis soluta, quasi adipisci qui atque <br />
         aliquid quisquam nisi fuga voluptas aperiam praesentium cupiditate nihil saepe aspernatur eaque odio.
-    </div>
+    </div> -->
 </div>
 
 <div class="row g-0 align-items-center">
     <div class="col-12 col-lg-6">
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active bg-dark" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="bg-dark" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="bg-dark" aria-label="Slide 3"></button>
+            <?php foreach ($images as $key => $image) : ?>
+                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<?php echo $key ?>" class="<?php echo ($key === 0) ? "active" : "" ?> bg-dark" aria-current="true" aria-label="Slide 1"></button>
+            <?php endforeach; ?>
             </div>
             <div class="carousel-inner text-center">
-                <div class="carousel-item active">
-                    <img src="../../sources/images/animaux/Chats/Odin/Odin2.jpg" class="img-thumbnail" style="height:500px;" alt="Odin">
-                </div>
-                <div class="carousel-item">
-                    <img src="../../sources/images/animaux/Chats/Odin/Odin3.jpg" class="img-thumbnail" style="height:500px;" alt="Odin">
-                </div>
-                <div class="carousel-item">
-                    <img src="../../sources/images/animaux/Chats/Odin/Odin4.jpg" class="img-thumbnail" style="height:500px;" alt="Odin">
-                </div>
+                <?php foreach ($images as $key => $image) : ?>
+                    <div class="carousel-item <?php echo ($key === 0) ? "active" : "" ?>">
+                        <img src="../../sources/images/animaux/<?= $animal['type_animal'] ?>/<?= $image['url_image'] ?>" class="img-thumbnail" style="height:500px;" alt="<?= $image['libelle_image']?>">
+                    </div>
+                <?php endforeach; ?>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon bg-dark" aria-hidden="true"></span>
@@ -115,17 +110,17 @@ $stmt->closeCursor();
             <?= styleTitreNiveau2("Qui suis-je ?", COLOR_TITRE_PENSIONNAIRES) ?>
             <p>
                 <img src="../../sources/images/Autres/icones/IconeAdopt.png" alt="" width="50" height="50" class="d-block mx-auto">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque temporibus, autem, incidunt fugiat, voluptates ipsa doloribus voluptatibus natus quia quas vel.
+                <?= $animal['description_animal'] ?>
             </p>
             <hr />
             <p>
                 <img src="../../sources/images/Autres/icones/oeil.jpg" alt="" width="50" height="50" class="d-block mx-auto">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit porro dolor at distinctio. Cum, voluptatibus soluta, nobis debitis quasi voluptatem ut earum inventore laboriosam saepe, odit reprehenderit. Fuga, ipsam cum?
+                <?= $animal['adoption_description_animal'] ?>
             </p>
             <hr />
             <p>
                 <img src="../../sources/images/Autres/icones/iconeContrat.png" alt="" width="50" height="50" class="d-block mx-auto">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Consectetur debitis facere molestiae cum aut repudiandae odit excepturi, officiis aliquam modi. Ratione molestiae maxime, id aliquam harum pariatur eaque voluptate architecto?
+                <?= $animal['engagement_description_animal'] ?>
             </p>
         </div>
     </div>

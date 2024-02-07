@@ -79,7 +79,7 @@ $stmt->closeCursor();
                     <div class="mb-2"><?= $animal['date_naissance_animal'] ?></div>
                     <?php
                         $stmt = $bdd->prepare('
-                            SELECT * 
+                            SELECT c.libelle_caractere_m, c.libelle_caractere_f
                             FROM caractere c
                             INNER join dispose d on c.id_caractere = d.id_caractere
                             where id_animal = :idAnimal
@@ -91,7 +91,7 @@ $stmt->closeCursor();
                     ?>
                     <div class="">
                         <?php foreach ($caracteres as $caractere) : ?>
-                            <span class="badge bg-warning m-1 p-2 d-none d-sm-inline"><?= $caractere['libelle_caractere'] ?></span>
+                            <span class="badge bg-warning m-1 p-2 d-none d-sm-inline"><?= ($animal['sexe']) ? $caractere['libelle_caractere_m'] : $caractere['libelle_caractere_f'] ?></span>
                             
                         <?php endforeach; ?>
                         <a href="./animal.php?idAnimal=<?= $animal['id_animal'] ?>" class="btn btn-primary my-3">Visitez ma page</a>
